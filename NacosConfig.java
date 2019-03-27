@@ -97,7 +97,10 @@ public class NacosConfig {
 
     @Bean
     public Converter<String, List<ParamFlowRuleEntity>> paramFlowRuleEntityDecoder() {
-        return s -> JSON.parseArray(s, ParamFlowRuleEntity.class);
+        // return s -> JSON.parseArray(s, ParamFlowRuleEntity.class);
+        return s -> JSON.parseArray(s, ParamFlowRule.class).stream()
+                .map(e -> ParamFlowRuleEntity.fromParamFlowRule(e))
+                .collect(Collectors.toList());
     }
     
     /**
